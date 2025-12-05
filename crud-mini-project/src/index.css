@@ -1,0 +1,20 @@
+@import 'tailwindcss';
+:root {
+    --pri:#000;
+    --sec:#fcfcfc;
+}
+
+.dark {
+    background: var(--pri);
+    color: var(--sec);
+}
+
+.light {
+    background-color: var(--sec);
+    color: var(--pri);
+}
+
+.strike {
+    color: #fcfcfc46;
+    text-decoration: line-through;
+}
