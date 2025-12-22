@@ -1,10 +1,9 @@
-import { useState } from 'react';
 
 const Form = ({ users, setUsers }) => {
     const err = {
-        name: users.name.length < 3 ? "Name should be of atleast 3 characters" : "",
+        name: users.name.length > 0 && users.name.length < 3 ? "Name should be of atleast 3 characters" : "",
         password: users.password != users.confirmPassword ? "Password does not match" : "",
-        email: users.email.includes('@') ? "" : "Email should include @"
+        email: users.email == '' || users.email.includes('@') ? "" : "Email should include @"
     }
 
     const submitHandler = (e) => {
@@ -17,9 +16,14 @@ const Form = ({ users, setUsers }) => {
         setUsers({ ...users, name: name })
     }
 
-    const handlePassword = (e) => {
-
-    }
+    const formValidate = 
+    !err.name &&
+    !err.email &&
+    !err.password &&
+    users.name &&
+    users.email &&
+    users.password &&
+    users.confirmPassword
 
     return (
         <form
@@ -42,7 +46,7 @@ const Form = ({ users, setUsers }) => {
                 value={users.confirmPassword} />
 
             <input className='light px-3' type="submit" value="Submit"
-                onClick={() => {  }}
+                disabled = {!formValidate}
             />
 
             <p>{err.name}</p>
