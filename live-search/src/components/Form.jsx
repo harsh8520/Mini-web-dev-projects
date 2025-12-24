@@ -6,15 +6,22 @@ const Form = ({ query, setQuery, setRequest, isLoading, setIsLoading }) => {
     }
 
     useEffect(() => {
-        setIsLoading(prev => !prev)
-        if (!query) return 
-        const timeOut = setTimeout(async () => {
+        let allowed = true
+        let timeOut
+        if (!query) return
+        timeOut = setTimeout(async () => {
             const getRes = await fetch('https://jsonplaceholder.typicode.com/users');
             const res = await getRes.json()
-            setRequest(res)
+            if (allowed) {
+                setRequest(res)
+                console.log("Success");
+            }
+            else {
+                console.log("Did not update state");
+            }
         }, 1000)
 
-        return () => clearTimeout(timeOut)
+        return () => { clearTimeout(timeOut); allowed = false; }
     }, [query])
 
     return (
